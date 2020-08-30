@@ -1,10 +1,10 @@
 from tqdm import tqdm
-from azureml.core import Workspace, Experiment, Model
-from azureml.opendatasets import Diabetes
+from azureml.core import Workspace, Experiment
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error
-from sklearn.externals import joblib
+import pandas as pd
+import joblib
 import math
 
 ##################################################################
@@ -17,15 +17,34 @@ experiment = Experiment(workspace=ws, name="diabetes-experiment")
 ##################################################################
 # get data
 ##################################################################
-x_df = Diabetes.get_tabular_dataset().to_pandas_dataframe().dropna()
-y_df = x_df.pop("Y")
+# load the diabetes dataset
+print("Loading diabetes data")
+diabetes = pd.read_csv("data/diabetes.csv")
+X, y = (
+    diabetes[
+        [
+            "Pregnancies",
+            "PlasmaGlucose",
+            "DiastolicBloodPressure",
+            "TricepsThickness",
+            "SerumInsulin",
+            "BMI",
+            "DiabetesPedigree",
+            "Age",
+        ]
+    ].values,
+    diabetes["Diabetic"].values,
+)
 
-X_train, X_test, y_train, y_test = train_test_split(x_df, y_df, test_size=0.2, random_state=66)
+# Split data into training set and test set
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.30, random_state=0
+)
 
 
 ##################################################################
-# Train multiple models, loging metrics of each model training in
-# a seperare run.
+# Train multiple models, logging metrics of each model training in
+# a separate run.
 ##################################################################
 alphas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
@@ -56,15 +75,15 @@ run_metrics = {}
 # runs containing the 'mse' metric
 for r in tqdm(experiment.get_runs()):
     metrics = r.get_metrics()
-    if 'rmse' in metrics.keys():
+    if "rmse" in metrics.keys():
         runs[r.id] = r
         run_metrics[r.id] = metrics
 
 # Find the run with the best (lowest) mean squared error and display the id and metrics
-best_run_id = min(run_metrics, key = lambda k: run_metrics[k]['rmse'])
+best_run_id = min(run_metrics, key=lambda k: run_metrics[k]["rmse"])
 best_run = runs[best_run_id]
-print('Best run is:', best_run_id)
-print('Metrics:', run_metrics[best_run_id])
+print("Best run is:", best_run_id)
+print("Metrics:", run_metrics[best_run_id])
 
 # Tag the best run for identification later
 best_run.tag("Best Run")
@@ -75,6 +94,5 @@ for f in best_run.get_file_names():
 
 # Register the model with the workspace
 model = best_run.register_model(
-    model_name='best_model',
-    model_path='model_alpha_0.1.pkl'
+    model_name="best_model", model_path="model_alpha_0.1.pkl"
 )

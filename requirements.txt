@@ -1,3 +1,4 @@
 azureml
+azureml-opendatasets
 sklearn
 tqdm
