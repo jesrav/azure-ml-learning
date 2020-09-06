@@ -2,7 +2,7 @@ from pathlib import Path
 from azureml.core import Workspace
 from azureml.core import Environment
 
-CONDA_YAML_PATH = Path("learning-scripts/_00_create_environment_and_compute/conda.yaml")
+CONDA_YAML_PATH = Path("learning-scripts/00_create_environment_and_compute/conda.yaml")
 ws = Workspace.from_config()
 
 env = Environment.from_conda_specification(
