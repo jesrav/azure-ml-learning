@@ -1,6 +1,21 @@
-import azureml.core
-from azureml.core import Workspace, Experiment
+from pathlib import Path
+from azureml.core import Environment, Experiment, Workspace
+from azureml.train.estimator import Estimator
 
-# Load the workspace from the saved config file
 ws = Workspace.from_config()
+
+compute_name = "aml-cluster"
+
+training_env = Environment.get(workspace=ws, name="training_environment")
+
+experiment_folder = Path("learning-scripts/03_experiment_using_script")
+
+estimator = Estimator(
+    source_directory=experiment_folder,
+    entry_script="train.py",
+    environment_definition=training_env,
+    compute_target=compute_name,
+)
+
 experiment = Experiment(workspace=ws, name="diabetes-experiment")
+run = experiment.submit(config=estimator)
