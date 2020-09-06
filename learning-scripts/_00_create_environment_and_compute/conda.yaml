@@ -1,0 +1,8 @@
+name: py_env
+dependencies:
+  - python=3.8
+  - numpy
+  - pandas
+  - scikit-learn
+  - pip:
+    - azureml-defaults
