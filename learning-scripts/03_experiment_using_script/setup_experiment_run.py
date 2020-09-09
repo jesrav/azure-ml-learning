@@ -13,6 +13,7 @@ experiment_folder = Path("learning-scripts/03_experiment_using_script")
 estimator = Estimator(
     source_directory=experiment_folder,
     entry_script="train.py",
+    inputs=[ws.datasets["diabetes"].as_named_input("diabetes")],
     environment_definition=training_env,
     compute_target=compute_name,
 )

@@ -1,6 +1,5 @@
 # Import libraries
 from azureml.core import Run
-import pandas as pd
 import numpy as np
 import joblib
 import os
@@ -12,8 +11,7 @@ from sklearn.metrics import roc_auc_score
 run = Run.get_context()
 
 # load the diabetes dataset
-print("Loading Data...")
-diabetes = pd.read_csv("diabetes.csv")
+diabetes = run.input_datasets["diabetes"].to_pandas_dataframe()
 
 # Separate features and labels
 X, y = (
