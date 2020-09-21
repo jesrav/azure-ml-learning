@@ -8,5 +8,6 @@ ws = Workspace.from_config()
 env = Environment.from_conda_specification(
     name="training_environment", file_path=CONDA_YAML_PATH
 )
+env.docker.enabled = True
 
 env.register(workspace=ws)
