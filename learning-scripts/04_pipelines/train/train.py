@@ -62,7 +62,7 @@ def main(input_folder, output_folder):
     run.log("AUC", np.float(auc))
 
     # Save the trained model in the outputs folder
-    os.makedirs("outputs", exist_ok=True)
+    os.makedirs(output_folder, exist_ok=True)
     output_path = Path(output_folder) / Path("model.pkl")
     joblib.dump(value=model, filename=output_path)
 
