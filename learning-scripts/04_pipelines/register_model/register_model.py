@@ -10,12 +10,12 @@ def main(model_folder):
 
     # load the model
     print("Loading model from " + model_folder)
-    model_file = Path("model_folder") / Path("model.pkl")
+    model_file = Path(model_folder) / Path("model.pkl")
     model = joblib.load(model_file)
 
     Model.register(
         workspace=run.experiment.workspace,
-        model_path=model_file,
+        model_path=str(model_file),
         model_name="pipeline_diabetes_model",
         tags={"Training context": "Pipeline"},
     )

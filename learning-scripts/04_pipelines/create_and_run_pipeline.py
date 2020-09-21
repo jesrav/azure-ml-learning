@@ -22,6 +22,7 @@ run_config = RunConfiguration()
 run_config.environment = training_env
 run_config.target = compute_name
 
+
 # Paths top scripts
 preprocess_step_directory = Path("learning-scripts/04_pipelines/preprocess")
 train_step_directory = Path("learning-scripts/04_pipelines/train")
@@ -65,7 +66,7 @@ register_step = PythonScriptStep(
     arguments=["--model_folder", model_folder],
     inputs=[model_folder],
     runconfig=run_config,
-    allow_reuse=True,
+    allow_reuse=False,
 )
 
 
