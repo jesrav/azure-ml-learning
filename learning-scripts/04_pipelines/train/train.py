@@ -85,4 +85,4 @@ if __name__ == "__main__":
         help="output folder",
     )
     args = parser.parse_args()
-    main(args.input_data, args.output_folder)
+    main(args.input_folder, args.output_folder)
