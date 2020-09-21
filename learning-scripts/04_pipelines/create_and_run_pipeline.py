@@ -29,10 +29,10 @@ register_step_directory = Path("learning-scripts/04_pipelines/register_model")
 
 
 # Define a PipelineData object for the preprocessed data
-preprocessed_folder = PipelineData("preprocessed_data", datastore=data_store)
+preprocessed_folder = PipelineData("preprocessed_folder", datastore=data_store)
 
 # Define a PipelineData object for the model artifact
-model_folder = PipelineData("preprocessed_data", datastore=data_store)
+model_folder = PipelineData("model_folder", datastore=data_store)
 
 # Step to run a Python script
 preprocess_step = PythonScriptStep(
