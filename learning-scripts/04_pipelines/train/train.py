@@ -63,7 +63,7 @@ def main(input_folder, output_folder):
 
     # Save the trained model in the outputs folder
     os.makedirs(output_folder, exist_ok=True)
-    output_path = Path(output_folder) / Path("model.pkl")
+    output_path = str(Path(output_folder) / Path("model.pkl"))
     joblib.dump(value=model, filename=output_path)
 
     run.complete()
