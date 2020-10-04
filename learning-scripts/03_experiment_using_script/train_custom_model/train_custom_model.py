@@ -1,10 +1,9 @@
 # Import libraries
 from azureml.core import Run
 import numpy as np
-import joblib
 import os
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_auc_score, accuracy_score
+from sklearn.metrics import accuracy_score
 
 from model_config import model
 
