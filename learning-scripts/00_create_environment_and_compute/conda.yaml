@@ -6,3 +6,4 @@ dependencies:
   - scikit-learn
   - pip:
     - azureml-defaults
+    - inference-schema

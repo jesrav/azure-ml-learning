@@ -1,5 +1,6 @@
 azureml-sdk
 azureml-opendatasets
 azureml-mlflow
+inference-schema
 sklearn
 tqdm
